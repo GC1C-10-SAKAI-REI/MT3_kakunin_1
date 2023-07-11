@@ -16,6 +16,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	char keys[256] = {0};
 	char preKeys[256] = {0};
 
+	//関数クラスの制作
 	MyMatrix* myMatrix = new MyMatrix();
 
 	//カメラの位置
