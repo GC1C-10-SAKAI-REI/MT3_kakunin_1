@@ -211,8 +211,8 @@ Matrix4x4 MyMatrix::Inverse(Matrix4x4& m1)
 	return result;
 }
 
-Matrix4x4 MyMatrix::MakePerspectiveFovMatrix(
-	float fovY, float aspectRatio, float nearClip, float farClip) {
+Matrix4x4 MyMatrix::MakePerspectiveFovMatrix(float fovY, float aspectRatio, float nearClip, float farClip)
+{
 	Matrix4x4 result;
 
 	result.m[0][0] = (1 / tan(fovY / 2)) / aspectRatio;
@@ -236,8 +236,8 @@ Matrix4x4 MyMatrix::MakePerspectiveFovMatrix(
 	return result;
 }
 
-Matrix4x4 MyMatrix::MakeViewportMatrix(
-	float left, float top, float width, float height, float minDepth, float maxDepth) {
+Matrix4x4 MyMatrix::MakeViewportMatrix(float left, float top, float width, float height, float minDepth, float maxDepth)
+{
 	Matrix4x4 result;
 
 	result.m[0][0] = width / 2;
@@ -260,7 +260,8 @@ Matrix4x4 MyMatrix::MakeViewportMatrix(
 	return result;
 }
 
-Vec3 MyMatrix::Transform(const Vec3& vector, const Matrix4x4& matrix) {
+Vec3 MyMatrix::Transform(const Vec3& vector, const Matrix4x4& matrix) 
+{
 	Vec3 result;
 
 	result.X = (vector.X * matrix.m[0][0]) + (vector.Y * matrix.m[1][0]) + (vector.Z * matrix.m[2][0]) + matrix.m[3][0];
