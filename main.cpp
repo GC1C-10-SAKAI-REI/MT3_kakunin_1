@@ -89,10 +89,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			Vec3 ndcVertex = myMatrix->Transform(localVertices[i], worldViewProjectionMatrix);
 			//ビューポート変換を行ってスクリーン空間へ
 			scrVertices[i] = myMatrix->Transform(ndcVertex, viewportMatrix);
-
-			Novice::ScreenPrintf(0, i * 30, "%f", worldViewProjectionMatrix.m[0][0]);
 		}
-
 		
 		/// ↑更新処理ここまで
 		
