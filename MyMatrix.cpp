@@ -323,6 +323,30 @@ Vec3 MyMatrix::Transform(const Vec3& vector, const Matrix4x4& matrix) {
 	return result;
 }
 
+Matrix4x4 MyMatrix::MakeOrthographicMatrix(float left, float top, float right, float bottom, float nearClip, float farClip)
+{
+	Matrix4x4 result;
+
+	result.m[0][0] = 2 / (right - left);
+	result.m[0][1] = 0;
+	result.m[0][2] = 0;
+	result.m[0][3] = 0;
+	result.m[1][0] = 0;
+	result.m[1][1] = 2 / (top - bottom);
+	result.m[1][2] = 0;
+	result.m[1][3] = 0;
+	result.m[2][0] = 0;
+	result.m[2][1] = 0;
+	result.m[2][2] = 1 / (farClip - nearClip);
+	result.m[2][3] = 0;
+	result.m[3][0] = (left + right) / (left - right);
+	result.m[3][1] = (top + bottom) / (bottom - top);
+	result.m[3][2] = nearClip / (nearClip - farClip);
+	result.m[3][3] = 1;
+
+	return result;
+}
+
 void MyMatrix::DrawGrid(const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewPortMatrix) {
 	// Gridの半分の幅
 	const float kGridHalfWidth = 2.0f;
@@ -362,4 +386,24 @@ void MyMatrix::DrawGrid(const Matrix4x4& viewProjectionMatrix, const Matrix4x4& 
 			Novice::DrawLine(int(scrStart.X), int(scrStart.Y), int(scrEnd.X), int(scrEnd.Y), 0xAAAAAAFF);
 		}
 	}
+}
+
+void MyMatrix::MatrixScreenPrintf(int x, int y, const Matrix4x4 &matrix, const char *label, int columnWidth, int rowHeight)
+{
+	Novice::ScreenPrintf(x, y, "%s", label);
+	for (int row = 0; row < 4; ++row)
+	{
+		for (int column = 0; column < 4; ++column)
+		{
+			Novice::ScreenPrintf(x + column * columnWidth, (y + 20) + row * rowHeight, "%6.02f", matrix.m[row][column]);
+		}
+	}
+}
+
+void MyMatrix::VectorScreenPrintf(int x, int y, const Vec3 &vector, const char *label, int columnWidth)
+{
+	Novice::ScreenPrintf(x, y, "%0.2f", vector.X);
+	Novice::ScreenPrintf(x + columnWidth, y, "%0.2f", vector.Y);
+	Novice::ScreenPrintf(x + columnWidth * 2, y, "%0.2f", vector.Z);
+	Novice::ScreenPrintf(x + columnWidth * 3, y, "%s", label);
 }
