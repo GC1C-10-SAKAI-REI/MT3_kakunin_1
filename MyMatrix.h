@@ -5,9 +5,6 @@
 
 class MyMatrix
 {
-private:
-	
-
 public:
 	// コンストラクタ
 	MyMatrix();
