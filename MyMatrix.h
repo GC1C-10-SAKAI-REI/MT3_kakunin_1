@@ -32,4 +32,9 @@ public:
 	Vec3 Transform(const Vec3& vector, const Matrix4x4& matrix);
 	// グリッド描画
 	void DrawGrid(const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewPortMatrix);
+
+	//行列表示関数
+	void MatrixScreenPrintf(int x, int y, const Matrix4x4& matrix, const char* label, int columnWidth, int rowHeight);
+	//ベクトル表示
+	void VectorScreenPrintf(int x, int y, const Vec3& vector, const char* label, int columnWidth);
 };
