@@ -6,8 +6,6 @@
 
 const char kWindowTitle[] = "GC2C_07_サカイレイ";
 
-
-
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
@@ -52,6 +50,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		
 		/// ↓描画処理ここから
 		
+		//グリッド描画
 		myMatrix->DrawGrid(viewProjectionMatrix, viewportMatrix);
 		
 		/// ↑描画処理ここまで		
