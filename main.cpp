@@ -21,6 +21,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	//カメラの位置
 	Vec3 cameraPos{ 0.0f,1.9f,-6.49f };
+	//	〃	の角度
+	Vec3 cameraRotate{ 0.26f,0.0f,0.0f };
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0)
@@ -35,7 +37,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		/// ↓更新処理ここから
 		
 		//1.
-		Matrix4x4 cameraMatrix = myMatrix->MakeAffineMatrix({ 1.0f,1.0f,1.0f }, { 0.26f,0.0f,0.0f }, cameraPos);
+		Matrix4x4 cameraMatrix = myMatrix->MakeAffineMatrix({ 1.0f,1.0f,1.0f }, cameraRotate, cameraPos);
 		//2.ビュー座標系に変換
 		Matrix4x4 viewMatrix = myMatrix->Inverse(cameraMatrix);
 		//3.ビュー座標系から同時クリップ座標系に変換
