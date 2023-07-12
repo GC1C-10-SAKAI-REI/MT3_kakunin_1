@@ -364,6 +364,31 @@ void MyMatrix::DrawGrid(const Matrix4x4& viewProjectionMatrix, const Matrix4x4& 
 	}
 }
 
+void MyMatrix::DrawSpere(const Sphere& sphere, const Matrix4x4& viewProjection, const Matrix4x4& viewportMatrix, uint32_t color)
+{
+	const uint32_t subdivision = 12;	//分割数
+	const float lonEvery = 30;		//経度分割1つ分の角度
+	const float latEvery = 30;		//緯度分割1つ分の角度
+	float pi = M_PI / 2;
+	//緯度の方向に分割 -π/2 ～ π/2
+	for (uint32_t latIndex = 0; latIndex < subdivision; ++latIndex)
+	{
+		float lat = -pi / 2.0f + latEvery * latIndex;//現在の緯度
+		//経度の方向に分割 -π/2 ～ π/2
+		for (uint32_t lonIndex = 0; lonIndex < subdivision; ++lonIndex)
+		{
+			float lon = lonIndex * lonEvery;//現在の経度
+			//world座標系でのa,b,cを求める
+			Vec3 a, b, c;
+			//a,b,cをScreen座標系まで変換
+
+			//ab,bcで線を引く
+			Novice::DrawLine(a.X, a.Y, b.X, b.Y, BLACK);
+			Novice::DrawLine(b.X, b.Y, c.X, c.Y, BLACK);
+		}
+	}
+}
+
 void MyMatrix::MatrixScreenPrintf(int x, int y, const Matrix4x4& matrix, const char* label, int columnWidth, int rowHeight)
 {
 	Novice::ScreenPrintf(x, y, "%s", label);

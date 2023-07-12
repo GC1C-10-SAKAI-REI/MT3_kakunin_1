@@ -1,5 +1,8 @@
 #pragma once
+#define _USE_MATH_DEFINES
+
 #include <cmath>
+#include <math.h>
 #include <assert.h>
 #include "Struct.h"
 
@@ -32,6 +35,8 @@ public:
 	Vec3 Transform(const Vec3& vector, const Matrix4x4& matrix);
 	// グリッド描画
 	void DrawGrid(const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewPortMatrix);
+	//球描画
+	void DrawSpere(const Sphere& sphere, const Matrix4x4& viewProjection, const Matrix4x4& viewportMatrix, uint32_t color);
 
 	//行列表示関数
 	void MatrixScreenPrintf(int x, int y, const Matrix4x4& matrix, const char* label, int columnWidth, int rowHeight);
