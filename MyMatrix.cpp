@@ -341,24 +341,30 @@ void MyMatrix::DrawGrid(const Matrix4x4& viewProjectionMatrix, const Matrix4x4& 
 		Vec3 scrStart = Transform(Transform(start, viewProjectionMatrix), viewPortMatrix);
 		Vec3 scrEnd = Transform(Transform(end, viewProjectionMatrix), viewPortMatrix);
 
-		if (x == 0) {
+		if (x == 0)
+		{
 			Novice::DrawLine(int(scrStart.X), int(scrStart.Y), int(scrEnd.X), int(scrEnd.Y), BLACK);
-		} else {
+		}
+		else
+		{
 			Novice::DrawLine(int(scrStart.X), int(scrStart.Y), int(scrEnd.X), int(scrEnd.Y), 0xAAAAAAFF);
 		}
 	}
 	// 左から右も同じように順々に引いていく
-	for (uint32_t zIndex = 0; zIndex <= subdivision; ++zIndex) {
+	for (uint32_t zIndex = 0; zIndex <= subdivision; ++zIndex)
+	{
 		float z = -kGridHalfWidth + (zIndex * kGridEvery);
 		Vec3 start = {-kGridHalfWidth, 0.0f, z};
 		Vec3 end = {kGridHalfWidth, 0.0f, z};
 		Vec3 scrStart = Transform(Transform(start, viewProjectionMatrix), viewPortMatrix);
 		Vec3 scrEnd = Transform(Transform(end, viewProjectionMatrix), viewPortMatrix);
 
-		if (z == 0) {
+		if (z == 0)
+		{
 			Novice::DrawLine(int(scrStart.X), int(scrStart.Y), int(scrEnd.X), int(scrEnd.Y), BLACK);
 		}
-		else {
+		else
+		{
 			Novice::DrawLine(int(scrStart.X), int(scrStart.Y), int(scrEnd.X), int(scrEnd.Y), 0xAAAAAAFF);
 		}
 	}
@@ -367,24 +373,28 @@ void MyMatrix::DrawGrid(const Matrix4x4& viewProjectionMatrix, const Matrix4x4& 
 void MyMatrix::DrawSpere(const Sphere& sphere, const Matrix4x4& viewProjection, const Matrix4x4& viewportMatrix, uint32_t color)
 {
 	const uint32_t subdivision = 12;	//分割数
-	const float lonEvery = 30;		//経度分割1つ分の角度
-	const float latEvery = 30;		//緯度分割1つ分の角度
-	float pi = M_PI / 2;
+	float pi = float(M_PI);
+	const float lonEvery = 2 * pi / subdivision;		//経度分割1つ分の角度
+	const float latEvery = pi / subdivision;			//緯度分割1つ分の角度
 	//緯度の方向に分割 -π/2 ～ π/2
 	for (uint32_t latIndex = 0; latIndex < subdivision; ++latIndex)
 	{
+		//θ
 		float lat = -pi / 2.0f + latEvery * latIndex;//現在の緯度
 		//経度の方向に分割 -π/2 ～ π/2
 		for (uint32_t lonIndex = 0; lonIndex < subdivision; ++lonIndex)
 		{
+			//φ
 			float lon = lonIndex * lonEvery;//現在の経度
 			//world座標系でのa,b,cを求める
-			Vec3 a, b, c;
+			Vec3 a = { cosf(lat) * cosf(lon),sinf(lat),cosf(lat) * sinf(lon) };
+			Vec3 b = { cosf(lat + latEvery),sinf(lon + lonEvery),cosf(lat + latEvery) * sinf(lon)};
+			Vec3 c = { cosf(lat) * cosf(lon + lonEvery),sinf(lat),cosf(lat) * sinf(lon + lonEvery)};
 			//a,b,cをScreen座標系まで変換
 
 			//ab,bcで線を引く
-			Novice::DrawLine(a.X, a.Y, b.X, b.Y, BLACK);
-			Novice::DrawLine(b.X, b.Y, c.X, c.Y, BLACK);
+			Novice::DrawLine(a.X, a.Y, b.X, b.Y, color);
+			Novice::DrawLine(b.X, b.Y, c.X, c.Y, color);
 		}
 	}
 }
