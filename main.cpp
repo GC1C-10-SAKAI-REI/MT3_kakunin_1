@@ -2,6 +2,7 @@
 #define WINDOW_HEIGHT 720 //ウィンドウの高さ
 
 #include <Novice.h>
+#include <imgui.h>
 #include "MyMatrix.h"
 
 const char kWindowTitle[] = "GC2C_07_サカイレイ";
@@ -23,6 +24,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	Vec3 cameraPos{ 0.0f,1.9f,-6.49f };
 	//	〃	の角度
 	Vec3 cameraRotate{ 0.26f,0.0f,0.0f };
+	//
+	Sphere sphere
+	{
+		{0,0,0},
+		{0.5f}
+	};
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0)
@@ -35,6 +42,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		Novice::GetHitKeyStateAll(keys);
 
 		/// ↓更新処理ここから
+
+		ImGui::Begin("Window");
+		ImGui::DragFloat3("CameraTranslate", &cameraPos.X, 0.01f);
+		ImGui::DragFloat3("CameraRotate", &cameraRotate.X, 0.01f);
+		ImGui::DragFloat3("ShpereCenter", &sphere.Center.X, 0.01f);
+		ImGui::DragFloat("SphereRadius", &sphere.Rad, 0.01f);
+		ImGui::End();
 		
 		//1.
 		Matrix4x4 cameraMatrix = myMatrix->MakeAffineMatrix({ 1.0f,1.0f,1.0f }, cameraRotate, cameraPos);
@@ -55,6 +69,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		
 		//グリッド描画
 		myMatrix->DrawGrid(viewProjectionMatrix, viewportMatrix);
+		myMatrix->DrawSpere(sphere, viewProjectionMatrix, viewportMatrix, BLACK);
 		
 		/// ↑描画処理ここまで		
 

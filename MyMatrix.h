@@ -42,4 +42,5 @@ public:
 	void MatrixScreenPrintf(int x, int y, const Matrix4x4& matrix, const char* label, int columnWidth, int rowHeight);
 	//ベクトル表示
 	void VectorScreenPrintf(int x, int y, const Vec3& vector, const char* label, int columnWidth);
+
 };

@@ -374,7 +374,7 @@ void MyMatrix::DrawSpere(const Sphere& sphere, const Matrix4x4& viewProjection, 
 {
 	const uint32_t subdivision = 12;	//分割数
 	float pi = float(M_PI);
-	const float lonEvery = 2 * pi / subdivision;		//経度分割1つ分の角度
+	const float lonEvery = pi * 2.0f / subdivision;		//経度分割1つ分の角度
 	const float latEvery = pi / subdivision;			//緯度分割1つ分の角度
 	//緯度の方向に分割 -π/2 ～ π/2
 	for (uint32_t latIndex = 0; latIndex < subdivision; ++latIndex)
@@ -387,14 +387,33 @@ void MyMatrix::DrawSpere(const Sphere& sphere, const Matrix4x4& viewProjection, 
 			//φ
 			float lon = lonIndex * lonEvery;//現在の経度
 			//world座標系でのa,b,cを求める
-			Vec3 a = { cosf(lat) * cosf(lon),sinf(lat),cosf(lat) * sinf(lon) };
-			Vec3 b = { cosf(lat + latEvery),sinf(lon + lonEvery),cosf(lat + latEvery) * sinf(lon)};
-			Vec3 c = { cosf(lat) * cosf(lon + lonEvery),sinf(lat),cosf(lat) * sinf(lon + lonEvery)};
+			Vec3 a =
+			{
+				sphere.Center.X + sphere.Rad * cosf(lat) * cosf(lon),
+				sphere.Center.Y + sphere.Rad * sinf(lat),
+				sphere.Center.Z + sphere.Rad * cosf(lat) * sinf(lon)
+			};
+			Vec3 b =
+			{ 
+				sphere.Center.X + sphere.Rad * cosf(lat + latEvery) * cosf(lon),
+				sphere.Center.Y + sphere.Rad * sinf(lat + latEvery),
+				sphere.Center.Z + sphere.Rad * cosf(lat + latEvery) * sinf(lon)
+			};
+			Vec3 c =
+			{
+				sphere.Center.X + sphere.Rad * cosf(lat) * cosf(lon + lonEvery),
+				sphere.Center.Y + sphere.Rad * sinf(lat),
+				sphere.Center.Z + sphere.Rad * cosf(lat) * sinf(lon + lonEvery)
+			};
+			Vec3 scrA, scrB, scrC;
 			//a,b,cをScreen座標系まで変換
+			scrA = Transform(Transform(a, viewProjection), viewportMatrix);
+			scrB = Transform(Transform(b, viewProjection), viewportMatrix);
+			scrC = Transform(Transform(c, viewProjection), viewportMatrix);
 
 			//ab,bcで線を引く
-			Novice::DrawLine(a.X, a.Y, b.X, b.Y, color);
-			Novice::DrawLine(b.X, b.Y, c.X, c.Y, color);
+			Novice::DrawLine(int(scrA.X), int(scrA.Y), int(scrB.X), int(scrB.Y), color);
+			Novice::DrawLine(int(scrA.X), int(scrA.Y), int(scrC.X), int(scrC.Y), color);
 		}
 	}
 }

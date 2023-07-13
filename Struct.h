@@ -15,4 +15,4 @@ typedef struct Sphere
 {
 	Vec3 Center;
 	float Rad;
-};
+}Sphere;
