@@ -50,7 +50,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		ImGui::DragFloat("SphereRadius", &sphere.Rad, 0.01f);
 		ImGui::End();
 		
-		//1.
+		//1.カメラの座標をローカル座標からワールド座標に変換
 		Matrix4x4 cameraMatrix = myMatrix->MakeAffineMatrix({ 1.0f,1.0f,1.0f }, cameraRotate, cameraPos);
 		//2.ビュー座標系に変換
 		Matrix4x4 viewMatrix = myMatrix->Inverse(cameraMatrix);
