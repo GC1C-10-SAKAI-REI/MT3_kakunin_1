@@ -372,7 +372,7 @@ void MyMatrix::DrawGrid(const Matrix4x4& viewProjectionMatrix, const Matrix4x4& 
 
 void MyMatrix::DrawSpere(const Sphere& sphere, const Matrix4x4& viewProjection, const Matrix4x4& viewportMatrix, uint32_t color)
 {
-	const uint32_t subdivision = 12;	//分割数
+	const uint32_t subdivision = 16;	//分割数
 	float pi = float(M_PI);
 	const float lonEvery = pi * 2.0f / subdivision;		//経度分割1つ分の角度
 	const float latEvery = pi / subdivision;			//緯度分割1つ分の角度
